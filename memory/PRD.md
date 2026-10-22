@@ -22,6 +22,11 @@ Landing page completa e responsive in un UNICO file HTML, zero dipendenze estern
 - Single-file HTML, palette rigorosa, 5 fasi con transizione cromatica graduale scroll-synced
 - Contenuti in italiano, tono editoriale/contemporaneo, tipografia non compressa
 
+## Implementato (22/10/2026) — Upgrade cromatico ambienti
+- Palette multicolore in tutti gli ambienti: foresta con lucciole ciano/viola/ambra e funghi luminosi pulsanti (corallo, teal, viola), tracce viola sui tronchi; oceano con onde a gradiente turchese→blu→viola (vertex colors), plancton bioluminescente, gocce colorate, anelli di marea attorno alla perla; ghiacciaio con aurora boreale animata (3 nastri verde/ciano/viola/rosa) e cristalli colorati; tempesta indaco con doppio strato di pioggia e arcobaleno che appare dopo ogni lampo; cielo con stelle multicolore, via lattea, 3 nebulose additive (viola/teal/magenta), luna con alone dorato, satelliti colorati collegati da linee di costellazione aggiornate in tempo reale
+- Texture generate proceduralmente via canvas (bagliori, aurora) — zero asset esterni
+- Verificato via screenshot su tutti e 5 gli ambienti
+
 ## Implementato (22/10/2026) — Esperienza 3D natura
 - Home sostituita da viaggio 3D a scroll: camera guidata da GSAP ScrollTrigger con scrub inerziale attraverso 5 ambienti natura (foresta con lucciole e luna, oceano con onde animate, ghiacciaio bianco con cristalli in deriva, tempesta con 620 gocce di pioggia e lampi, cielo stellato con luna e satelliti orbitali)
 - Ogni ambiente: caption con reveal titolo riga-per-riga + testo (GSAP), numerazione 01-05
