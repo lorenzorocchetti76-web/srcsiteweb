@@ -1,3 +1,5 @@
+import Experience from "@/Experience";
+
 export default function App() {
-  return null;
+  return <Experience />;
 }

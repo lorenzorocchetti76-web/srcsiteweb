@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio Rocchetti — Comunicazione</title>
+<meta name="description" content="Studio Rocchetti Comunicazione — strategia, identità e produzione per brand che vogliono lasciare il segno. Un metodo in cinque fasi.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23224d8a'/%3E%3Ccircle cx='32' cy='32' r='9' fill='%23f6f6f4'/%3E%3C/svg%3E">
+<style>
+/* ============ STUDIO ROCCHETTI — single file, zero dependencies ============ */
+:root{
+  --nero:#060606;
+  --blu:#224d8a;
+  --blu-soft:#8aa8d8;
+  --bianco:#f6f6f4;
+  --bg:#060606;
+  --fg:#f6f6f4;
+  --fg-dim:rgba(246,246,244,.62);
+  --line:rgba(246,246,244,.16);
+  --sans:"Neue Haas Grotesk","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",serif;
+  --ease:cubic-bezier(.19,1,.22,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{height:auto}
+body{
+  font-family:var(--sans);
+  background:var(--nero);
+  color:var(--fg);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  transition:color .55s ease;
+}
+::selection{background:var(--blu);color:#fff}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+img,svg{display:block}
+
+/* ---------- fixed layers ---------- */
+#bg{position:fixed;inset:0;z-index:-2;background:var(--nero)}
+#glow{
+  position:fixed;left:0;top:0;z-index:60;pointer-events:none;
+  width:640px;height:640px;margin:-320px 0 0 -320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(90,132,196,.20) 0%,rgba(34,77,138,.08) 38%,transparent 68%);
+  mix-blend-mode:screen;will-change:transform;
+}
+#progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:120;background:transparent}
+#progress i{
+  display:block;height:100%;transform-origin:0 50%;transform:scaleX(0);
+  background:linear-gradient(90deg,var(--blu),var(--blu-soft),var(--blu));
+  background-size:200% 100%;animation:progf shimmer 6s linear infinite;
+}
+@keyframes progf{to{background-position:200% 0}}
+
+/* ---------- nav ---------- */
+#nav{
+  position:fixed;top:3px;left:0;right:0;z-index:110;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px clamp(20px,5vw,64px);
+  transition:padding .5s var(--ease),background-color .5s ease,border-color .5s ease,backdrop-filter .5s ease;
+  border-bottom:1px solid transparent;
+}
+#nav.scrolled{
+  padding:13px clamp(20px,5vw,64px);
+  background:color-mix(in srgb,var(--bg) 58%,transparent);
+  -webkit-backdrop-filter:blur(18px) saturate(1.4);
+  backdrop-filter:blur(18px) saturate(1.4);
+  border-bottom:1px solid var(--line);
+}
+.logo{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.02em}
+.logo .mark{width:30px;height:30px;transition:transform .6s var(--ease)}
+.logo:hover .mark{transform:rotate(90deg)}
+.logo .word{font-size:15px;line-height:1.05}
+.logo .word small{display:block;font-weight:400;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--fg-dim);transition:color .55s ease}
+.nav-links{display:flex;gap:34px;font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+.nav-links a{position:relative;padding:6px 0;color:var(--fg-dim);transition:color .4s ease}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--fg);transform:scaleX(0);transform-origin:100% 50%;transition:transform .5s var(--ease)}
+.nav-links a:hover{color:var(--fg)}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:0 50%}
+.nav-cta{
+  font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+  border:1px solid var(--line);border-radius:999px;padding:11px 22px;
+  transition:background-color .45s ease,color .45s ease,border-color .45s ease,transform .45s var(--ease);
+}
+.nav-cta:hover{background:var(--fg);color:var(--bg);transform:translateY(-2px)}
+@media(max-width:860px){.nav-links{display:none}}
+
+/* ---------- generic ---------- */
+main{position:relative;z-index:1}
+section{position:relative}
+.wrap{width:min(1240px,90vw);margin:0 auto}
+.label{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--fg-dim);
+  transition:color .55s ease;
+}
+.label::before{content:"";width:34px;height:1px;background:var(--blu-soft)}
+.reveal{opacity:0;transform:translateY(46px);filter:blur(8px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease),filter 1.1s var(--ease);transition-delay:var(--d,0s)}
+.reveal.in{opacity:1;transform:translateY(0);filter:blur(0)}
+
+/* word split reveal */
+h1[data-split],h2[data-split]{overflow:hidden}
+.w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em;margin-bottom:-.08em}
+.wi{display:inline-block;transform:translate(0.35em,115%) rotate(5deg);transform-origin:0 100%;transition:transform 1.15s var(--ease);transition-delay:var(--d,0s)}
+.in .wi,.loaded .wi{transform:translate(0,0) rotate(0)}
+
+/* ---------- hero ---------- */
+#hero{min-height:100svh;display:flex;align-items:flex-end;padding:0 0 9vh;overflow:hidden}
+#grid3d{
+  position:absolute;left:-25%;right:-25%;bottom:-12%;height:75%;
+  background:
+    linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:72px 72px;
+  transform:perspective(650px) rotateX(62deg);
+  transform-origin:50% 100%;
+  animation:gridmove 9s linear infinite;
+  -webkit-mask-image:linear-gradient(to top,#000 30%,transparent 92%);
+  mask-image:linear-gradient(to top,#000 30%,transparent 92%);
+  opacity:.55;transition:background-color .55s ease;
+}
+@keyframes gridmove{to{background-position:0 72px,0 0}}
+.hero-ghost{
+  position:absolute;top:8vh;left:0;right:0;text-align:center;
+  font-size:clamp(90px,17vw,270px);font-weight:800;letter-spacing:.04em;
+  color:transparent;-webkit-text-stroke:1px var(--line);
+  user-select:none;pointer-events:none;white-space:nowrap;
+}
+.hero-inner{position:relative;width:min(1240px,90vw);margin:0 auto}
+.hero-kicker{margin-bottom:26px}
+#hero h1{
+  font-size:clamp(46px,8.4vw,124px);line-height:.98;font-weight:750;
+  letter-spacing:-.015em;max-width:14ch;
+}
+#hero h1 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--blu-soft)}
+.hero-sub{
+  margin-top:34px;max-width:52ch;font-size:clamp(15px,1.4vw,18px);line-height:1.7;
+  color:var(--fg-dim);transition:color .55s ease;
+}
+.hero-actions{margin-top:42px;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+.btn{
+  position:relative;display:inline-flex;align-items:center;gap:12px;overflow:hidden;
+  font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  padding:17px 32px;border-radius:999px;border:1px solid var(--line);
+  transition:color .45s ease,border-color .45s ease,transform .45s var(--ease);
+}
+.btn::before{content:"";position:absolute;inset:0;background:var(--fg);transform:translateY(101%);transition:transform .5s var(--ease);border-radius:inherit}
+.btn span{position:relative;z-index:1}
+.btn:hover{color:var(--bg);transform:translateY(-2px)}
+.btn:hover::before{transform:translateY(0)}
+.btn.solid{background:var(--blu);border-color:var(--blu);color:#fff}
+.btn.solid::before{background:#fff}
+.btn.solid:hover{color:var(--blu)}
+.scroll-hint{
+  position:absolute;right:clamp(20px,5vw,64px);bottom:9vh;
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--fg-dim);
+  writing-mode:vertical-rl;
+}
+.scroll-hint i{width:1px;height:64px;background:var(--line);position:relative;overflow:hidden}
+.scroll-hint i::after{content:"";position:absolute;left:0;top:-40%;width:100%;height:40%;background:var(--fg);animation:drip 2.2s var(--ease) infinite}
+@keyframes drip{to{top:110%}}
+@media(max-width:860px){.scroll-hint{display:none}}
+
+/* ---------- marquee ---------- */
+.marquee{border-block:1px solid var(--line);padding:26px 0;overflow:hidden;transition:border-color .55s ease}
+.mq-track{display:flex;width:max-content;animation:mq 42s linear infinite}
+.marquee:hover .mq-track{animation-play-state:paused}
+.mq-track span{
+  font-size:clamp(28px,4.6vw,58px);font-weight:750;letter-spacing:.01em;
+  padding:0 .9ch;white-space:nowrap;line-height:1.1;
+}
+.mq-track span.o{color:transparent;-webkit-text-stroke:1px var(--fg-dim);transition:-webkit-text-stroke-color .55s ease}
+.mq-track .dot{color:var(--blu-soft);-webkit-text-stroke:0}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ---------- studio / counters ---------- */
+#studio{padding:22vh 0 16vh}
+.studio-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:8vw;align-items:start}
+.studio-txt{
+  margin-top:30px;font-size:clamp(22px,2.6vw,36px);line-height:1.45;font-weight:400;
+  letter-spacing:-.005em;max-width:26ch;
+}
+.studio-txt em{font-family:var(--serif);font-style:italic;color:var(--blu-soft)}
+.studio-side{font-size:15px;line-height:1.8;color:var(--fg-dim);max-width:38ch;transition:color .55s ease}
+.counters{
+  margin-top:14vh;display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--line);transition:border-color .55s ease;
+}
+.counter{padding:44px 26px 6px;border-right:1px solid var(--line);transition:border-color .55s ease}
+.counter:last-child{border-right:0}
+.counter b{
+  display:block;font-size:clamp(40px,5.4vw,76px);font-weight:750;letter-spacing:-.02em;line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+.counter b sup{font-size:.45em;color:var(--blu-soft);font-weight:600}
+.counter span{display:block;margin-top:14px;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--fg-dim);transition:color .55s ease}
+@media(max-width:860px){
+  .studio-grid{grid-template-columns:1fr;gap:40px}
+  .counters{grid-template-columns:1fr 1fr}
+  .counter:nth-child(2n){border-right:0}
+  .counter{padding:30px 18px 6px}
+}
+
+/* ---------- metodo intro ---------- */
+#metodo{padding:10vh 0 4vh;text-align:left}
+#metodo h2{font-size:clamp(38px,6vw,88px);font-weight:750;letter-spacing:-.015em;line-height:1.02;margin-top:26px}
+#metodo p{margin-top:22px;color:var(--fg-dim);font-size:15px;letter-spacing:.05em;transition:color .55s ease}
+
+/* ---------- fasi ---------- */
+.fase{min-height:150vh;display:flex;align-items:center;padding:16vh 0;overflow:hidden}
+.fase-bgnum{
+  position:absolute;top:50%;right:-2vw;transform:translateY(-50%);
+  font-size:clamp(240px,38vw,560px);font-weight:800;line-height:.8;
+  color:transparent;-webkit-text-stroke:1px var(--line);
+  user-select:none;pointer-events:none;transition:-webkit-text-stroke-color .55s ease;
+  will-change:transform;
+}
+.fase-inner{position:relative;width:min(1240px,90vw);margin:0 auto;z-index:2}
+.fase-tag{
+  display:inline-flex;align-items:center;gap:14px;font-size:11px;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--blu-soft);margin-bottom:24px;
+}
+.fase-tag::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--blu-soft);animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.9);opacity:.35}}
+.fase h2{font-size:clamp(54px,9vw,140px);font-weight:750;letter-spacing:-.02em;line-height:.96}
+.fase-txt{
+  margin-top:38px;max-width:46ch;font-size:clamp(16px,1.5vw,19px);line-height:1.8;
+  color:var(--fg-dim);transition:color .55s ease;will-change:transform;
+}
+.tone{transition:color .2s linear;font-weight:600}
+.fase-list{margin-top:56px;max-width:560px;border-top:1px solid var(--line);transition:border-color .55s ease}
+.fase-list li{
+  position:relative;display:flex;align-items:center;gap:22px;overflow:hidden;
+  padding:22px 10px;border-bottom:1px solid var(--line);
+  font-size:clamp(15px,1.5vw,18px);letter-spacing:.02em;
+  transition:color .4s ease,border-color .55s ease,padding-left .5s var(--ease);
+  cursor:default;
+}
+.fase-list li::before{
+  content:"";position:absolute;inset:0;background:var(--blu);
+  transform:scaleY(0);transform-origin:50% 100%;transition:transform .5s var(--ease);z-index:-1;
+}
+.fase-list li:hover{padding-left:26px;color:#fff}
+.fase-list li:hover::before{transform:scaleY(1)}
+.fase-list li i{font-style:normal;font-size:11px;letter-spacing:.2em;color:var(--blu-soft);font-variant-numeric:tabular-nums}
+.fase-list li:hover i{color:#fff}
+.fase-list li b{font-weight:500}
+.fase-list li .arr{margin-left:auto;transition:transform .5s var(--ease)}
+.fase-list li:hover .arr{transform:translateX(8px) rotate(-45deg)}
+.fase-art{
+  position:absolute;left:56%;top:50%;width:clamp(220px,26vw,380px);aspect-ratio:1;
+  transform:translateY(-50%);z-index:1;color:var(--blu-soft);opacity:.9;
+  will-change:transform;pointer-events:none;
+}
+.fase-art svg{width:100%;height:100%;overflow:visible}
+.spin-slow{animation:spin 26s linear infinite;transform-origin:50% 50%}
+.spin-rev{animation:spin 34s linear infinite reverse;transform-origin:50% 50%}
+@keyframes spin{to{transform:rotate(360deg)}}
+.breathe{animation:breathe 5.5s ease-in-out infinite;transform-origin:50% 50%}
+@keyframes breathe{50%{transform:scale(1.12);opacity:.55}}
+@media(max-width:960px){
+  .fase{min-height:0;padding:14vh 0}
+  .fase-art{position:relative;left:0;top:0;transform:none;margin:56px auto 0;width:min(300px,64vw);opacity:.75}
+  .fase-bgnum{font-size:52vw;top:6%;transform:none}
+}
+
+/* ---------- attività ---------- */
+#attivita{padding:18vh 0}
+.att-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap}
+.att-head h2{font-size:clamp(38px,5.6vw,80px);font-weight:750;letter-spacing:-.015em;margin-top:26px;line-height:1.02}
+.att-head p{max-width:34ch;color:var(--fg-dim);font-size:15px;line-height:1.7;transition:color .55s ease}
+.cards{margin-top:9vh;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;perspective:1400px}
+.card{
+  position:relative;border:1px solid var(--line);border-radius:18px;overflow:hidden;
+  padding:34px 30px 30px;min-height:300px;display:flex;flex-direction:column;
+  transform-style:preserve-3d;will-change:transform;
+  transition:border-color .55s ease,background-color .55s ease;
+  background:color-mix(in srgb,var(--fg) 3%,transparent);
+}
+.card::after{
+  content:"";position:absolute;inset:0;opacity:0;transition:opacity .5s ease;pointer-events:none;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(138,168,216,.22),transparent 65%);
+}
+.card:hover::after{opacity:1}
+.card:hover{border-color:var(--blu-soft)}
+.card .num{font-size:11px;letter-spacing:.3em;color:var(--blu-soft);font-variant-numeric:tabular-nums}
+.card h3{margin-top:18px;font-size:clamp(20px,1.9vw,26px);font-weight:650;letter-spacing:-.01em;transform:translateZ(34px)}
+.card p{margin-top:14px;font-size:14px;line-height:1.7;color:var(--fg-dim);transition:color .55s ease;transform:translateZ(20px)}
+.card .go{
+  margin-top:auto;padding-top:26px;display:inline-flex;align-items:center;gap:10px;
+  font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--fg-dim);
+  transition:color .4s ease,gap .4s var(--ease);
+}
+.card:hover .go{color:var(--fg);gap:18px}
+@media(max-width:960px){.cards{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.cards{grid-template-columns:1fr}.card{min-height:240px}}
+
+/* ---------- finale / orbit ---------- */
+#finale{min-height:110vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:16vh 0}
+.orbit-wrap{position:relative;width:min(760px,92vw);aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+.orbit{position:absolute;inset:0;pointer-events:none}
+.orbit svg{width:100%;height:100%;overflow:visible}
+.finale-core{position:relative;z-index:2}
+.finale-core h2{font-size:clamp(40px,6.4vw,92px);font-weight:750;letter-spacing:-.02em;line-height:1.02}
+.finale-core h2 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--blu-soft)}
+.finale-core p{margin:26px auto 0;max-width:40ch;color:var(--fg-dim);font-size:15px;line-height:1.75;transition:color .55s ease}
+.finale-core .btn{margin-top:40px}
+.mail-big{
+  display:inline-block;margin-top:26px;font-size:clamp(15px,1.6vw,19px);letter-spacing:.04em;
+  color:transparent;-webkit-text-stroke:1px var(--fg);
+  transition:color .45s ease,-webkit-text-stroke-color .45s ease;
+}
+.mail-big:hover{color:var(--blu-soft);-webkit-text-stroke-color:transparent}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:12vh 0 5vh;transition:border-color .55s ease}
+.foot-giant{
+  font-size:clamp(58px,12.5vw,190px);font-weight:800;letter-spacing:.01em;line-height:.95;
+  color:transparent;-webkit-text-stroke:1px var(--fg-dim);
+  transition:color .7s ease,-webkit-text-stroke-color .7s ease;
+  cursor:default;user-select:none;
+}
+.foot-giant:hover{color:var(--fg);-webkit-text-stroke-color:transparent}
+.foot-grid{margin-top:9vh;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;font-size:14px;line-height:2}
+.foot-grid h4{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--blu-soft);margin-bottom:16px}
+.foot-grid a{color:var(--fg-dim);transition:color .35s ease;display:inline-block}
+.foot-grid a:hover{color:var(--fg);transform:translateX(4px)}
+.socials{display:flex;gap:14px;margin-top:8px}
+.socials a{
+  width:44px;height:44px;border:1px solid var(--line);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .5s var(--ease),background-color .45s ease,border-color .45s ease;
+}
+.socials a:hover{transform:rotate(-14deg) scale(1.1);background:var(--blu);border-color:var(--blu)}
+.socials svg{width:17px;height:17px;fill:var(--fg)}
+.foot-base{
+  margin-top:9vh;padding-top:26px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-dim);
+  transition:border-color .55s ease,color .55s ease;
+}
+@media(max-width:860px){.foot-grid{grid-template-columns:1fr;gap:34px}}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none;filter:none}
+  .wi{transform:none}
+  #glow,#grid3d,.scroll-hint{display:none}
+  .fase-art,.fase-bgnum,[data-speed]{transform:none!important}
+}
+</style>
+</head>
+<body>
+<div id="root" style="display:none"></div>
+<div id="bg" aria-hidden="true"></div>
+<div id="glow" aria-hidden="true"></div>
+<div id="progress" data-testid="scroll-progress" aria-hidden="true"><i></i></div>
+
+<header id="nav" data-testid="navbar">
+  <a class="logo" href="#hero" data-testid="logo-link" aria-label="Studio Rocchetti — home">
+    <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#224d8a"/><circle cx="32" cy="32" r="9" fill="#f6f6f4"/></svg>
+    <span class="word">Studio Rocchetti<small>Comunicazione</small></span>
+  </a>
+  <nav class="nav-links" aria-label="Navigazione principale">
+    <a href="#studio" data-testid="nav-studio">Studio</a>
+    <a href="#metodo" data-testid="nav-metodo">Metodo</a>
+    <a href="#attivita" data-testid="nav-attivita">Attività</a>
+  </nav>
+  <a class="nav-cta" href="#finale" data-testid="nav-cta">Parliamone</a>
+</header>
+
+<main>
+  <!-- ============ HERO ============ -->
+  <section id="hero" data-color="#060606">
+    <div id="grid3d" aria-hidden="true"></div>
+    <div class="hero-ghost" data-speed="0.35" aria-hidden="true">ROCCHETTI</div>
+    <div class="hero-inner">
+      <p class="label hero-kicker reveal" style="--d:.15s">Studio di comunicazione · Milano</p>
+      <h1 data-split data-testid="hero-title">Comunicazione che lascia il <em>segno.</em></h1>
+      <p class="hero-sub reveal" style="--d:.7s" data-testid="hero-sub">
+        Strategia, identità e produzione per brand che vogliono farsi ricordare.
+        Un metodo in cinque fasi, un solo obiettivo: risultati che durano.
+      </p>
+      <div class="hero-actions reveal" style="--d:.9s">
+        <a class="btn solid" href="#metodo" data-testid="hero-cta-metodo"><span>Scopri il metodo</span></a>
+        <a class="btn" href="#finale" data-testid="hero-cta-contatti"><span>Parliamone</span></a>
+      </div>
+    </div>
+    <div class="scroll-hint" aria-hidden="true">Scorri<i></i></div>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <div class="marquee" data-testid="marquee" aria-hidden="true">
+    <div class="mq-track" id="mq">
+      <span>Strategia</span><span class="dot">·</span><span class="o">Identità</span><span class="dot">·</span><span>Campagne</span><span class="dot">·</span><span class="o">Contenuti</span><span class="dot">·</span><span>Digitale</span><span class="dot">·</span><span class="o">Eventi</span><span class="dot">·</span>
+    </div>
+  </div>
+
+  <!-- ============ STUDIO ============ -->
+  <section id="studio" data-color="#060606">
+    <div class="wrap">
+      <div class="studio-grid">
+        <div>
+          <p class="label reveal">Lo studio</p>
+          <p class="studio-txt reveal" style="--d:.12s" data-testid="studio-claim">
+            Siamo un laboratorio indipendente. Uniamo <em>rigore strategico</em> e
+            <em>sensibilità editoriale</em> per costruire marche che restano.
+          </p>
+        </div>
+        <p class="studio-side reveal" style="--d:.24s">
+          Nato a Milano, Studio Rocchetti lavora con aziende, istituzioni e realtà
+          culturali. Pochi progetti alla volta, seguiti da vicino: dalla prima
+          conversazione al lancio, ogni dettaglio è curato dallo stesso team.
+        </p>
+      </div>
+      <div class="counters" data-testid="counters">
+        <div class="counter reveal" style="--d:0s"><b><span class="count" data-count="12">0</span></b><span>Anni di attività</span></div>
+        <div class="counter reveal" style="--d:.1s"><b><span class="count" data-count="140">0</span><sup>+</sup></b><span>Progetti consegnati</span></div>
+        <div class="counter reveal" style="--d:.2s"><b><span class="count" data-count="96">0</span><sup>%</sup></b><span>Clienti che tornano</span></div>
+        <div class="counter reveal" style="--d:.3s"><b><span class="count" data-count="9">0</span></b><span>Riconoscimenti</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ METODO INTRO ============ -->
+  <section id="metodo" data-color="#060606">
+    <div class="wrap">
+      <p class="label reveal">Il metodo</p>
+      <h2 class="reveal" style="--d:.1s" data-testid="metodo-title">Cinque fasi.<br>Un percorso.</h2>
+      <p class="reveal" style="--d:.22s">Scorri lentamente: il colore della pagina segue il processo — nero, blu, bianco, blu, nero.</p>
+    </div>
+  </section>
+
+  <!-- ============ FASE 01 — ASCOLTO (NERO) ============ -->
+  <section class="fase" id="fase-01" data-color="#060606" data-testid="fase-01">
+    <div class="fase-bgnum" data-speed="0.14" aria-hidden="true">01</div>
+    <div class="fase-art" data-speed="-0.1" data-tilt aria-hidden="true">
+      <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1">
+        <circle class="breathe" cx="100" cy="100" r="30"/>
+        <circle class="spin-slow" cx="100" cy="100" r="58" stroke-dasharray="4 7"/>
+        <circle class="spin-rev" cx="100" cy="100" r="86" stroke-dasharray="2 10"/>
+        <circle cx="100" cy="100" r="4" fill="currentColor" stroke="none"/>
+      </svg>
+    </div>
+    <div class="fase-inner">
+      <p class="fase-tag reveal">Fase 01 — Nero</p>
+      <h2 data-split data-testid="fase-01-title">Ascolto</h2>
+      <p class="fase-txt reveal" style="--d:.2s">
+        Ogni progetto inizia in silenzio. Ci sediamo, facciamo domande e
+        <span class="tone">ascoltiamo davvero</span>: obiettivi, vincoli, ambizioni.
+        È nel buio della fase uno che raccogliamo la materia prima di tutto il resto.
+      </p>
+      <ul class="fase-list" data-testid="fase-01-list">
+        <li class="reveal" style="--d:.28s"><i>01.1</i><b>Brief condiviso</b><span class="arr">→</span></li>
+        <li class="reveal" style="--d:.36s"><i>01.2</i><b>Ricerca di mercato</b><span class="arr">→</span></li>
+        <li class="reveal" style="--d:.44s"><i>01.3</i><b>Analisi competitor</b><span class="arr">→</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ FASE 02 — STRATEGIA (BLU) ============ -->
+  <section class="fase" id="fase-02" data-color="#224d8a" data-testid="fase-02">
+    <div class="fase-bgnum" data-speed="0.14" aria-hidden="true">02</div>
+    <div class="fase-art" data-speed="-0.12" data-tilt aria-hidden="true">
+      <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1">
+        <circle cx="100" cy="100" r="70"/>
+        <circle class="spin-slow" cx="100" cy="100" r="46" stroke-dasharray="30 12"/>
+        <path d="M100 14v30M100 156v30M14 100h30M156 100h30"/>
+        <circle cx="100" cy="100" r="5" fill="currentColor" stroke="none"/>
+      </svg>
+    </div>
+    <div class="fase-inner">
+      <p class="fase-tag reveal">Fase 02 — Blu</p>
+      <h2 data-split data-testid="fase-02-title">Strategia</h2>
+      <p class="fase-txt reveal" style="--d:.2s">
+        Le intuizioni diventano direzione. Definiamo
+        <span class="tone">posizionamento, pubblici e messaggi chiave</span>:
+        una mappa precisa che guida ogni scelta creativa, dal primo bozzetto all'ultimo pixel.
+      </p>
+      <ul class="fase-list" data-testid="fase-02-list">
+        <li class="reveal" style="--d:.28s"><i>02.1</i><b>Posizionamento</b><span class="arr">→</span></li>
+        <li class="reveal" style="--d:.36s"><i>02.2</i><b>Messaggi chiave</b><span class="arr">→</span></li>
+        <li class="reveal" style="--d:.44s"><i>02.3</i><b>Pianificazione</b><span class="arr">→</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ FASE 03 — IDENTITÀ (BIANCO) ============ -->
+  <section class="fase" id="fase-03" data-color="#f6f6f4" data-testid="fase-03">
+    <div class="fase-bgnum" data-speed="0.14" aria-hidden="true">03</div>
+    <div class="fase-art" data-speed="-0.1" data-tilt aria-hidden="true" style="color:#224d8a">
+      <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1">
+        <rect class="spin-slow" x="45" y="45" width="110" height="110"/>
+        <rect class="spin-rev" x="70" y="70" width="60" height="60"/>
+        <rect class="breathe" x="92" y="92" width="16" height="16" fill="currentColor" stroke="none"/>
+      </svg>
+    </div>
+    <div class="fase-inner">
+      <p class="fase-tag reveal">Fase 03 — Bianco</p>
+      <h2 data-split data-testid="fase-03-title">Identità</h2>
+      <p class="fase-txt reveal" style="--d:.2s">
+        La fase della luce. Il brand prende forma: <span class="tone">segno, tipografia,
+        colore e voce</span>. Progettiamo sistemi visivi riconoscibili al primo sguardo
+        e costruiti per durare nel tempo.
+      </p>
+      <ul class="fase-list" data-testid="fase-03-list">
+        <li class="reveal" style="--d:.28s"><i>03.1</i><b>Naming &amp; logo</b><span class="arr">→</span></li>
+        <li class="reveal" style="--d:.36s"><i>03.2</i><b>Visual system</b><span class="arr">→</span></li>
+        <li class="reveal" style="--d:.44s"><i>03.3</i><b>Tone of voice</b><span class="arr">→</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ FASE 04 — PRODUZIONE (BLU) ============ -->
+  <section class="fase" id="fase-04" data-color="#224d8a" data-testid="fase-04">
+    <div class="fase-bgnum" data-speed="0.14" aria-hidden="true">04</div>
+    <div class="fase-art" data-speed="-0.12" data-tilt aria-hidden="true">
+      <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1">
+        <g class="spin-slow">
+          <path d="M100 30v140M30 100h140M51 51l98 98M149 51l-98 98"/>
+        </g>
+        <circle cx="100" cy="100" r="88" stroke-dasharray="3 9"/>
+        <circle class="breathe" cx="100" cy="100" r="12" fill="currentColor" stroke="none"/>
+      </svg>
+    </div>
+    <div class="fase-inner">
+      <p class="fase-tag reveal">Fase 04 — Blu</p>
+      <h2 data-split data-testid="fase-04-title">Produzione</h2>
+      <p class="fase-txt reveal" style="--d:.2s">
+        L'identità diventa esperienza. Campagne, contenuti, siti e materiali:
+        <span class="tone">ogni pezzo è prodotto con cura artigianale</span> e
+        controllo ossessivo della coerenza.
+      </p>
+      <ul class="fase-list" data-testid="fase-04-list">
+        <li class="reveal" style="--d:.28s"><i>04.1</i><b>Campagne adv</b><span class="arr">→</span></li>
+        <li class="reveal" style="--d:.36s"><i>04.2</i><b>Contenuti &amp; social</b><span class="arr">→</span></li>
+        <li class="reveal" style="--d:.44s"><i>04.3</i><b>Web &amp; digital</b><span class="arr">→</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ FASE 05 — LANCIO (NERO) ============ -->
+  <section class="fase" id="fase-05" data-color="#060606" data-testid="fase-05">
+    <div class="fase-bgnum" data-speed="0.14" aria-hidden="true">05</div>
+    <div class="fase-art" data-speed="-0.1" data-tilt aria-hidden="true">
+      <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1">
+        <circle cx="100" cy="100" r="72" stroke-dasharray="4 8"/>
+        <g class="spin-slow">
+          <path d="M100 100 L164 66 L138 128 Z" fill="currentColor" stroke="none"/>
+        </g>
+        <circle cx="100" cy="100" r="5" fill="currentColor" stroke="none"/>
+      </svg>
+    </div>
+    <div class="fase-inner">
+      <p class="fase-tag reveal">Fase 05 — Nero</p>
+      <h2 data-split data-testid="fase-05-title">Lancio</h2>
+      <p class="fase-txt reveal" style="--d:.2s">
+        Si torna al nero: quello del palcoscenico prima che si accendano le luci.
+        <span class="tone">Go-live, misurazione, ottimizzazione</span> —
+        e il ciclo ricomincia, più forte di prima.
+      </p>
+      <ul class="fase-list" data-testid="fase-05-list">
+        <li class="reveal" style="--d:.28s"><i>05.1</i><b>Go-live</b><span class="arr">→</span></li>
+        <li class="reveal" style="--d:.36s"><i>05.2</i><b>Misurazione</b><span class="arr">→</span></li>
+        <li class="reveal" style="--d:.44s"><i>05.3</i><b>Ottimizzazione</b><span class="arr">→</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ ATTIVITÀ ============ -->
+  <section id="attivita" data-color="#060606">
+    <div class="wrap">
+      <div class="att-head">
+        <div>
+          <p class="label reveal">Attività</p>
+          <h2 class="reveal" style="--d:.1s" data-testid="attivita-title">Cosa facciamo,<br>ogni giorno.</h2>
+        </div>
+        <p class="reveal" style="--d:.2s">Sei ambiti, un unico team. Muovi il cursore sulle card: la luce ti segue.</p>
+      </div>
+      <div class="cards" data-testid="cards">
+        <article class="card reveal" style="--d:0s" data-testid="card-brand">
+          <span class="num">A·01</span><h3>Brand Identity</h3>
+          <p>Naming, logo e sistemi visivi completi: marchi riconoscibili e costruiti per crescere.</p>
+          <span class="go">Scopri <span>→</span></span>
+        </article>
+        <article class="card reveal" style="--d:.08s" data-testid="card-art">
+          <span class="num">A·02</span><h3>Art Direction</h3>
+          <p>Direzione creativa di shooting, campagne e materiali editoriali, dalla moodboard al set.</p>
+          <span class="go">Scopri <span>→</span></span>
+        </article>
+        <article class="card reveal" style="--d:.16s" data-testid="card-adv">
+          <span class="num">A·03</span><h3>Campagne Advertising</h3>
+          <p>Campagne integrate online e offline: concept, pianificazione e produzione chiavi in mano.</p>
+          <span class="go">Scopri <span>→</span></span>
+        </article>
+        <article class="card reveal" style="--d:0s" data-testid="card-content">
+          <span class="num">A·04</span><h3>Content &amp; Social</h3>
+          <p>Piani editoriali, contenuti foto e video, gestione dei canali con voce coerente.</p>
+          <span class="go">Scopri <span>→</span></span>
+        </article>
+        <article class="card reveal" style="--d:.08s" data-testid="card-digital">
+          <span class="num">A·05</span><h3>Web &amp; Digital</h3>
+          <p>Siti, landing ed e-commerce su misura: design editoriale e performance tecniche.</p>
+          <span class="go">Scopri <span>→</span></span>
+        </article>
+        <article class="card reveal" style="--d:.16s" data-testid="card-eventi">
+          <span class="num">A·06</span><h3>Eventi &amp; PR</h3>
+          <p>Lanci, press day ed eventi: relazioni con i media e momenti che la gente ricorda.</p>
+          <span class="go">Scopri <span>→</span></span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINALE / ORBIT ============ -->
+  <section id="finale" data-color="#060606">
+    <div class="orbit-wrap">
+      <div class="orbit" aria-hidden="true">
+        <svg viewBox="0 0 400 400" fill="none" stroke="currentColor" stroke-width="1" style="color:var(--blu-soft)">
+          <circle cx="200" cy="200" r="188" opacity=".35"/>
+          <g class="spin-slow">
+            <circle cx="200" cy="200" r="150" stroke-dasharray="2 10" opacity=".7"/>
+            <circle cx="200" cy="50" r="7" fill="currentColor" stroke="none"/>
+          </g>
+          <g class="spin-rev">
+            <circle cx="200" cy="200" r="112" opacity=".5"/>
+            <circle cx="312" cy="200" r="4" fill="currentColor" stroke="none"/>
+          </g>
+        </svg>
+      </div>
+      <div class="finale-core">
+        <p class="label reveal" style="justify-content:center">Fase finale — il tuo progetto</p>
+        <h2 data-split data-testid="finale-title" style="margin-top:22px">Hai un progetto <em>in mente?</em></h2>
+        <p class="reveal" style="--d:.25s">Raccontacelo davanti a un caffè. La prima conversazione è sempre la fase più importante: la 01.</p>
+        <div class="reveal" style="--d:.35s">
+          <a class="btn solid" id="magnet" href="mailto:hello@studiorocchetti.it" data-testid="finale-cta"><span>Iniziamo la fase 01</span></a>
+          <br>
+          <a class="mail-big" href="mailto:hello@studiorocchetti.it" data-testid="finale-mail">hello@studiorocchetti.it</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-giant reveal" data-testid="footer-giant">ROCCHETTI</div>
+    <div class="foot-grid">
+      <div class="reveal" style="--d:.05s">
+        <h4>Studio</h4>
+        <p style="color:var(--fg-dim);max-width:34ch">Studio Rocchetti Comunicazione<br>Via dei Giardini 12, 20121 Milano<br>P.IVA 01234567890</p>
+      </div>
+      <div class="reveal" style="--d:.12s">
+        <h4>Contatti</h4>
+        <a href="mailto:hello@studiorocchetti.it" data-testid="footer-mail">hello@studiorocchetti.it</a><br>
+        <a href="tel:+390212345678" data-testid="footer-phone">+39 02 1234 5678</a>
+      </div>
+      <div class="reveal" style="--d:.19s">
+        <h4>Seguici</h4>
+        <div class="socials">
+          <a href="#" aria-label="Instagram" data-testid="social-instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9-.1-1.3-.1-1.6-.1-4.8s0-3.6.1-4.8C2.4 4 4 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 3.6a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-10.4a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9z"/></svg></a>
+          <a href="#" aria-label="LinkedIn" data-testid="social-linkedin"><svg viewBox="0 0 24 24"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6h.1c.5-.9 1.7-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.3zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.5H3.5V9h3.6v11.5z"/></svg></a>
+          <a href="#" aria-label="Behance" data-testid="social-behance"><svg viewBox="0 0 24 24"><path d="M8.2 10.6c.8-.4 1.3-1.1 1.3-2.1 0-2-1.5-2.8-3.4-2.8H1v12.5h5.3c2.1 0 4.1-1 4.1-3.5 0-1.5-.7-2.6-2.2-3zM3.8 7.6h1.9c.9 0 1.7.2 1.7 1.3 0 1-.6 1.3-1.5 1.3H3.8V7.6zm2.3 8.7H3.8v-3h2.4c1.2 0 1.9.5 1.9 1.6 0 1.1-.9 1.4-2 1.4zM21.4 8.5h-5.6V7.1h5.6v1.4zM18.6 9.6c-2.6 0-4.3 1.9-4.3 4.4 0 2.6 1.6 4.4 4.4 4.4 2.1 0 3.4-1 4-2.6h-2.1c-.3.7-1 1-1.8 1-1.3 0-2-.8-2.1-2.1h6.1v-.7c0-2.5-1.5-4.4-4.2-4.4zm-1.9 3.7c.2-1.1 1-1.8 2-1.8 1.2 0 1.8.8 1.9 1.8h-3.9z"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© 2026 Studio Rocchetti</span>
+      <span>Nero · Bianco · #224d8a</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var finePointer = window.matchMedia("(pointer: fine)").matches;
+var root = document.documentElement;
+var bgEl = document.getElementById("bg");
+var bar = document.querySelector("#progress i");
+var nav = document.getElementById("nav");
+var glow = document.getElementById("glow");
+
+/* ---------- word split ---------- */
+document.querySelectorAll("[data-split]").forEach(function(h){
+  var nodes = Array.prototype.slice.call(h.childNodes);
+  h.innerHTML = "";
+  var idx = 0;
+  nodes.forEach(function(n){
+    var em = n.nodeType === 1 ? n.tagName === "EM" : false;
+    var text = n.textContent;
+    text.split(/(\s+)/).forEach(function(part){
+      if(!part) return;
+      if(/^\s+$/.test(part)){ h.appendChild(document.createTextNode(" ")); return; }
+      var w = document.createElement("span"); w.className = "w";
+      var wi = document.createElement("span"); wi.className = "wi";
+      wi.style.setProperty("--d",(0.25 + idx*0.09)+"s");
+      wi.textContent = part;
+      if(em){ var e = document.createElement("em"); e.appendChild(wi); w.appendChild(e); }
+      else w.appendChild(wi);
+      h.appendChild(w); idx++;
+    });
+  });
+});
+
+/* ---------- marquee: duplicate for seamless loop ---------- */
+var mq = document.getElementById("mq");
+mq.innerHTML += mq.innerHTML;
+
+/* ---------- reveal observer ---------- */
+var revealEls = document.querySelectorAll(".reveal,[data-split]");
+if(reduced){
+  revealEls.forEach(function(el){ el.classList.add("in"); });
+}else{
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
+    });
+  },{threshold:0.18,rootMargin:"0px 0px -6% 0px"});
+  revealEls.forEach(function(el){ io.observe(el); });
+}
+document.body.classList.add("loaded");
+
+/* ---------- counters ---------- */
+var counted = new WeakSet();
+var cio = new IntersectionObserver(function(entries){
+  entries.forEach(function(en){
+    if(!en.isIntersecting || counted.has(en.target)) return;
+    counted.add(en.target); cio.unobserve(en.target);
+    var el = en.target, target = +el.dataset.count;
+    if(reduced){ el.textContent = target; return; }
+    var t0 = null, dur = 1800;
+    function step(ts){
+      if(!t0) t0 = ts;
+      var p = Math.min((ts-t0)/dur,1);
+      var e = 1-Math.pow(1-p,4);
+      el.textContent = Math.round(target*e);
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+},{threshold:0.5});
+document.querySelectorAll(".count").forEach(function(el){ cio.observe(el); });
+
+/* ---------- color journey ---------- */
+function hex2rgb(h){
+  h = h.replace("#","");
+  return [parseInt(h.substr(0,2),16),parseInt(h.substr(2,2),16),parseInt(h.substr(4,2),16)];
+}
+var stops = [], docH = 1, vh = window.innerHeight;
+function measure(){
+  stops = [];
+  document.querySelectorAll("[data-color]").forEach(function(el){
+    var r = el.getBoundingClientRect();
+    var top = r.top + window.scrollY;
+    stops.push({y: top + el.offsetHeight*0.5, c: hex2rgb(el.dataset.color)});
+  });
+  stops.sort(function(a,b){return a.y-b.y;});
+  docH = document.documentElement.scrollHeight;
+  vh = window.innerHeight;
+}
+window.addEventListener("resize",measure);
+
+/* ---------- parallax registry ---------- */
+var plx = [];
+if(!reduced){
+  document.querySelectorAll("[data-speed]").forEach(function(el){
+    plx.push({el:el, s:parseFloat(el.dataset.speed)});
+  });
+}
+
+/* ---------- tone spans ---------- */
+var tones = [];
+document.querySelectorAll(".tone").forEach(function(el){
+  var sec = el.closest(".fase");
+  if(sec) tones.push({el:el, sec:sec});
+});
+var SOFT = hex2rgb("8aa8d8"), DARKSOFT = hex2rgb("224d8a");
+
+/* ---------- tilt cards ---------- */
+var tiltCards = [];
+if(finePointer && !reduced){
+  document.querySelectorAll(".card").forEach(function(card){
+    var t = {el:card, rx:0, ry:0, trx:0, try:0};
+    card.addEventListener("mousemove",function(e){
+      var r = card.getBoundingClientRect();
+      var px = (e.clientX-r.left)/r.width, py = (e.clientY-r.top)/r.height;
+      t.try = (px-0.5)*14; t.trx = (0.5-py)*10;
+      card.style.setProperty("--mx",(px*100)+"%");
+      card.style.setProperty("--my",(py*100)+"%");
+    });
+    card.addEventListener("mouseleave",function(){ t.trx=0; t.try=0; });
+    tiltCards.push(t);
+  });
+}
+
+/* ---------- fase art mouse drift (desktop) ---------- */
+var arts = [];
+if(finePointer && !reduced){
+  document.querySelectorAll(".fase-art[data-tilt]").forEach(function(a){ arts.push({el:a, x:0, y:0, tx:0, ty:0}); });
+  window.addEventListener("mousemove",function(e){
+    var nx = (e.clientX/window.innerWidth - 0.5), ny = (e.clientY/window.innerHeight - 0.5);
+    arts.forEach(function(a){ a.tx = nx*26; a.ty = ny*26; });
+    glowTx = e.clientX; glowTy = e.clientY;
+  });
+}
+var glowX = window.innerWidth/2, glowY = window.innerHeight/3;
+var glowTx = glowX, glowTy = glowY;
+
+/* ---------- magnetic finale button ---------- */
+var magnet = document.getElementById("magnet");
+var mag = {x:0,y:0,tx:0,ty:0};
+if(magnet && finePointer && !reduced){
+  magnet.addEventListener("mousemove",function(e){
+    var r = magnet.getBoundingClientRect();
+    mag.tx = (e.clientX-(r.left+r.width/2))*0.25;
+    mag.ty = (e.clientY-(r.top+r.height/2))*0.35;
+  });
+  magnet.addEventListener("mouseleave",function(){ mag.tx=0; mag.ty=0; });
+}
+
+/* ---------- helpers ---------- */
+function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+function mix(a,b,t){ return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
+function smooth(t){ return t*t*(3-2*t); }
+
+/* ---------- main loop ---------- */
+var LIGHT_FG = "#0a0a0a", LIGHT_DIM = "rgba(10,10,10,.6)", LIGHT_LINE = "rgba(10,10,10,.16)";
+var DARK_FG = "#f6f6f4", DARK_DIM = "rgba(246,246,244,.62)", DARK_LINE = "rgba(246,246,244,.16)";
+var isLight = null;
+
+function frame(){
+  var y = window.scrollY;
+  var probe = y + vh*0.55;
+
+  /* progress bar */
+  bar.style.transform = "scaleX(" + clamp(y/(docH-vh),0,1) + ")";
+
+  /* nav */
+  if(y>40) nav.classList.add("scrolled"); else nav.classList.remove("scrolled");
+
+  /* color journey */
+  var i = 0;
+  while(i<stops.length-1 && probe>stops[i+1].y) i++;
+  var a = stops[i], b = stops[Math.min(i+1,stops.length-1)];
+  var t = (a===b)?0:smooth(clamp((probe-a.y)/(b.y-a.y),0,1));
+  var c = mix(a.c,b.c,t);
+  bgEl.style.background = "rgb("+(c[0]|0)+","+(c[1]|0)+","+(c[2]|0)+")";
+  var lum = (0.2126*c[0]+0.7152*c[1]+0.0722*c[2])/255;
+  var light = lum>0.55;
+  if(light!==isLight){
+    isLight = light;
+    root.style.setProperty("--fg", light?LIGHT_FG:DARK_FG);
+    root.style.setProperty("--fg-dim", light?LIGHT_DIM:DARK_DIM);
+    root.style.setProperty("--line", light?LIGHT_LINE:DARK_LINE);
+    root.style.setProperty("--bg", "rgb("+(c[0]|0)+","+(c[1]|0)+","+(c[2]|0)+")");
+  }
+
+  if(!reduced){
+    /* parallax */
+    for(var k=0;k<plx.length;k++){
+      var p = plx[k], r = p.el.getBoundingClientRect();
+      if(r.bottom<-200||r.top>vh+200) continue;
+      var off = (r.top + r.height/2 - vh/2) * p.s;
+      if(p.el.classList.contains("fase-bgnum")){
+        p.el.style.transform = "translateY(calc(-50% + " + off.toFixed(1) + "px))";
+      }else{
+        p.el.style.transform = "translate3d(0," + off.toFixed(1) + "px,0)";
+      }
+    }
+    /* tone: white -> soft blue -> white across the phase */
+    for(var j=0;j<tones.length;j++){
+      var tn = tones[j], sr = tn.sec.getBoundingClientRect();
+      if(sr.bottom<0||sr.top>vh) continue;
+      var lp = clamp((vh*0.7 - sr.top)/(sr.height),0,1);
+      var m = Math.sin(lp*Math.PI);
+      var base = isLight ? DARKSOFT : [246,246,244];
+      var cc = mix(base, isLight ? SOFT : SOFT, m);
+      tn.el.style.color = "rgb("+(cc[0]|0)+","+(cc[1]|0)+","+(cc[2]|0)+")";
+    }
+    /* glow lerp */
+    glowX += (glowTx-glowX)*0.08; glowY += (glowTy-glowY)*0.08;
+    glow.style.transform = "translate3d(" + glowX + "px," + glowY + "px,0)";
+    /* card tilt lerp */
+    for(var q=0;q<tiltCards.length;q++){
+      var cd = tiltCards[q];
+      cd.rx += (cd.trx-cd.rx)*0.12; cd.ry += (cd.try-cd.ry)*0.12;
+      cd.el.style.transform = "rotateX(" + cd.rx.toFixed(2) + "deg) rotateY(" + cd.ry.toFixed(2) + "deg)";
+    }
+    /* art drift lerp */
+    for(var d=0;d<arts.length;d++){
+      var ar = arts[d];
+      ar.x += (ar.tx-ar.x)*0.06; ar.y += (ar.ty-ar.y)*0.06;
+      var rr = ar.el.getBoundingClientRect();
+      var base = (rr.top + rr.height/2 - vh/2) * (-0.11);
+      ar.el.style.transform = "translate3d(" + ar.x.toFixed(1) + "px, calc(-50% + " + (base+ar.y).toFixed(1) + "px),0)";
+    }
+    /* magnetic button */
+    mag.x += (mag.tx-mag.x)*0.15; mag.y += (mag.ty-mag.y)*0.15;
+    if(magnet) magnet.style.transform = "translate(" + mag.x.toFixed(1) + "px," + mag.y.toFixed(1) + "px)";
+  }else{
+    glow.style.display = "none";
+  }
+  requestAnimationFrame(frame);
+}
+
+/* init */
+if(reduced){
+  document.querySelectorAll(".count").forEach(function(el){ el.textContent = el.dataset.count; });
+  glow.style.display = "none";
+}
+if(finePointer && !reduced){} else { glow.style.display = "none"; }
+measure();
+window.addEventListener("load",measure);
+setTimeout(measure,600);
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

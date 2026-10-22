@@ -66,6 +66,34 @@ async def get_status_checks():
     
     return status_checks
 
+# ---- Error logging (real-time monitoring from the 3D experience) ----
+class LogEntry(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    level: str = "info"
+    message: str
+    stack: str = ""
+    src: str = ""
+    line: int = 0
+    url: str = ""
+    ua: str = ""
+    ts: str = ""
+
+class LogBatch(BaseModel):
+    entries: List[LogEntry]
+
+@api_router.post("/logs")
+async def create_logs(batch: LogBatch):
+    docs = [e.model_dump() for e in batch.entries]
+    if docs:
+        await db.error_logs.insert_many(docs)
+    return {"stored": len(docs)}
+
+@api_router.get("/logs")
+async def get_logs(limit: int = 100):
+    return await db.error_logs.find({}, {"_id": 0}).sort("ts", -1).to_list(min(limit, 500))
+
 # Include the router in the main app
 app.include_router(api_router)
 
