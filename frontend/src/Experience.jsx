@@ -11,32 +11,51 @@ import Overlay from "@/components/Overlay";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const CAPTIONS = [
+const PANELS = [
   {
-    id: "roma", idx: "01", name: "Roma",
-    lines: ["L'eternità", "in laterizio", "e oro."],
-    text: "Cupole, colonnati e cipressi sotto un sole che non tramonta mai davvero. Tocca la cupola e lascia che la polvere dorata ti guidi.",
+    id: "intro", idx: "Studio Rocchetti — Comunicazione", name: "Il metodo",
+    lines: ["Dal briefing", "al risultato."],
+    text: [
+      "Una direzione precisa. Un processo che trasforma ascolto, strategia e creatività in comunicazione misurabile.",
+      "Un'idea forte nasce da un'osservazione precisa. Dall'ascolto alla misurazione, ogni fase costruisce la successiva.",
+    ],
   },
   {
-    id: "newyork", idx: "02", name: "New York",
-    lines: ["Nove milioni", "di sogni", "accesi."],
-    text: "Migliaia di finestre illuminate, taxi gialli che attraversano la notte, un grattacielo che svetta. Ogni luce è una storia.",
+    id: "roma", idx: "01 / 05", name: "Briefing e Ascolto — Onboarding",
+    lines: ["Prima", "ascoltiamo."],
+    text: ["L'agenzia incontra il cliente per capire obiettivi, valori, budget e pubblico di riferimento. Si definiscono i messaggi chiave e ciò che il brand vuole comunicare — e ciò che non vuole comunicare."],
+    subs: ["Raccolta informazioni", "Analisi iniziale"],
   },
   {
-    id: "londra", idx: "03", name: "Londra",
-    lines: ["Nebbia, pioggia", "e grigio", "perfetto."],
-    text: "Il Big Ben scandisce il tempo, l'Occhio gira lento sul Tamigi e un double-decker rosso taglia la foschia.",
+    id: "newyork", idx: "02 / 05", name: "Analisi e Strategia",
+    lines: ["Poi", "definiamo."],
+    text: ["Studiamo il mercato, i concorrenti e il posizionamento attuale del brand. Il team delinea la strategia di comunicazione, il piano editoriale o il progetto creativo."],
+    subs: ["Studio del mercato", "Pianificazione"],
   },
   {
-    id: "dubai", idx: "04", name: "Dubai",
-    lines: ["Il deserto", "che tocca", "il cielo."],
-    text: "Guglie d'oro e vetro, una torre che ruota su se stessa, fontane di luce nella notte viola del deserto.",
+    id: "londra", idx: "03 / 05", name: "Sviluppo Creativo e Tecnico",
+    lines: ["Trasformiamo", "le idee."],
+    text: ["Art director, copywriter e designer realizzano loghi, grafiche, testi, siti web e campagne pubblicitarie. Le bozze vengono presentate al cliente per raccogliere feedback e revisionare."],
+    subs: ["Creazione degli asset", "Revisione e feedback"],
   },
   {
-    id: "mosca", idx: "05", name: "Mosca",
-    lines: ["Cupole colorate", "nella", "neve."],
-    text: "Il rosso del Cremlino, le cupole di San Basilio, la neve che cade senza rumore. Il viaggio finisce qui: la prossima città la costruiamo insieme.",
+    id: "dubai", idx: "04 / 05", name: "Lancio ed Esecuzione",
+    lines: ["Poi", "accendiamo."],
+    text: ["Si pubblicano i contenuti, si attivano le campagne media — social, Google, stampa — e si distribuisce il materiale. L'agenzia coordina canali e scadenze in tempo reale."],
+    subs: ["Messa online", "Gestione operativa"],
+  },
+  {
+    id: "mosca", idx: "05 / 05", name: "Monitoraggio e Ottimizzazione",
+    lines: ["E infine", "misuriamo."],
+    text: ["Controlliamo i risultati rispetto agli obiettivi iniziali. L'agenzia condivide report periodici con il cliente e usa i dati per ottimizzare le strategie future."],
+    subs: ["Analisi dei dati", "Reportistica"],
+  },
+  {
+    id: "finale", idx: "Non facciamo solo comunicazione. Costruiamo direzione.", name: "Contatti",
+    lines: ["Diamoci", "da fare."],
+    text: ["Un processo chiaro. Una comunicazione che resta.", "STRATEGIA / CREATIVITÀ / DIGITALE"],
     cta: true,
+    footer: "© STUDIO ROCCHETTI comunicazione",
   },
 ];
 
@@ -51,7 +70,7 @@ export default function Experience() {
     if (reduced) return undefined;
     const tweens = [];
     gsap.utils.toArray(".caption").forEach((cap) => {
-      const items = cap.querySelectorAll(".li, .cap-idx, .cap-text, .cap-cta");
+      const items = cap.querySelectorAll(".li, .cap-idx, .cap-text, .cap-sub, .cap-cta, .cap-foot");
       const tw = gsap.fromTo(items,
         { yPercent: 130, opacity: 0 },
         {
@@ -81,7 +100,7 @@ export default function Experience() {
           setLoadPct(Math.round(((i + 1) / ENVS.length) * 100));
         }
         if (disposed) return;
-        const rig = setupRig(camera, scene, envs.length);
+        const rig = setupRig(camera, scene);
         const inter = setupInteractions(camera, () => envs[rig.active], canvasRef.current);
         const clock = new THREE.Clock();
         setReady(true);
@@ -91,8 +110,13 @@ export default function Experience() {
           const t = clock.elapsedTime;
           rig.apply();
           inter.applyLook(camera);
-          const a = rig.active;
-          for (let k = Math.max(0, a - 1); k <= Math.min(envs.length - 1, a + 1); k++) envs[k].update(t, dt);
+          const ef = rig.envF;
+          envs.forEach((e, idx) => {
+            const vis = Math.abs(idx - ef) < 1.7;
+            e.group.visible = vis;
+            if (e.lights) e.lights.forEach((l) => { l.visible = vis; });
+          });
+          for (let k = Math.max(0, Math.floor(ef) - 1); k <= Math.min(envs.length - 1, Math.ceil(ef) + 1); k++) envs[k].update(t, dt);
           renderer.render(scene, camera);
         };
         loop();
@@ -109,21 +133,31 @@ export default function Experience() {
     <>
       <canvas ref={canvasRef} id="gl" data-testid="gl-canvas" aria-hidden="true" />
       <div id="track">
-        {CAPTIONS.map((c, i) => (
+        {PANELS.map((c, i) => (
           <section className={"panel" + (i % 2 ? " right" : "")} key={c.id} data-panel={i}>
             <div className="caption" data-testid={"caption-" + c.id}>
-              <span className="cap-idx">{c.idx} — {c.name}</span>
+              <span className="cap-idx">{c.idx}</span>
               <h2 className="cap-title">
                 {c.lines.map((l, j) => (
                   <span className="line" key={j}><span className="li">{l}</span></span>
                 ))}
               </h2>
-              <p className="cap-text">{c.text}</p>
+              {c.text.map((p, j) => (
+                <p className="cap-text" key={j}>{p}</p>
+              ))}
+              {c.subs && (
+                <ul className="cap-subs" data-testid={"subs-" + c.id}>
+                  {c.subs.map((s, j) => (
+                    <li className="cap-sub" key={j}><i>0{j + 1}</i><b>{s}</b></li>
+                  ))}
+                </ul>
+              )}
               {c.cta && (
-                <a className="cap-cta" href="mailto:hello@studiorocchetti.it" data-testid="cta-finale">
-                  Iniziamo un progetto ↗
+                <a className="cap-cta" href="mailto:INFO@STUDIOROCCHETTI.COM" data-testid="cta-finale">
+                  Scrivici — info@studiorocchetti.com ↗
                 </a>
               )}
+              {c.footer && <p className="cap-foot" data-testid="footer-line">{c.footer}</p>}
             </div>
           </section>
         ))}

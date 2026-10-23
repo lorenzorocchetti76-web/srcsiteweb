@@ -22,6 +22,15 @@ Landing page completa e responsive in un UNICO file HTML, zero dipendenze estern
 - Single-file HTML, palette rigorosa, 5 fasi con transizione cromatica graduale scroll-synced
 - Contenuti in italiano, tono editoriale/contemporaneo, tipografia non compressa
 
+## Implementato (23/10/2026) — Branding, testi ufficiali e upgrade cinematico
+- Header: "Studio Rocchetti & Partners"; titolo pagina e meta aggiornati
+- Percorso: intro ("Dal briefing al risultato.") + 5 fasi ufficiali mappate sulle città (01 Briefing/Ascolto→Roma, 02 Analisi/Strategia→New York, 03 Sviluppo Creativo→Londra, 04 Lancio→Dubai, 05 Monitoraggio→Mosca) con sotto-voci numerate, finale "Diamoci da fare." con CTA mailto INFO@STUDIOROCCHETTI.COM e riga ©
+- Grafica "cinematica": materiali PBR + RoomEnvironment (GI simulata via PMREM), tone mapping ACES, rim light posteriore per città, god-ray volumetrici (Roma/Dubai), facciate vetro (metalness alta) vs pietra opaca, ombre PCFSoft desktop
+- Città espanse (fino a 260 edifici, altezze crescenti verso i bordi), viali centrali con texture asfalto/strisce generati via canvas, strade trasversali rialzate (no z-fighting), corridoio centrale libero: la camera non attraversa mai gli edifici; le auto non collidono (corsie escluse dal posizionamento edifici)
+- Monumenti: Colosseo (Roma), Statua della Libertà (NYC), Tower Bridge (Londra), torre Spasskaja (Mosca); pavimenti lastre spesse 2.4 e larghe 130
+- Ciclo orario sempre diurno (0.6..1): intensità sole/rim/finestre oscillano senza mai scendere a notte; meteo variabile (pioggia NYC/Londra, neve Mosca legata al ciclo)
+- Verificato via screenshot: Roma (piazza, Colosseo, god-ray), New York (viale, taxi/bus, finestre, Liberty), mapping caption↔città corretto; zero errori console. NOTA: in ambiente headless (rendering software) gli screenshot richiedono attese lunghe; su browser reali con GPU la fluidità è normale
+
 ## Implementato (23/10/2026) — Città + vita urbana
 - Sostituiti i 5 ambienti natura con 5 città procedurali: Roma (cupola, colonnato, rovine, cipressi, vespe, sole+luna, polvere dorata), New York (170 grattacieli con ~1400 finestre illuminate, Empire-style tower con beacon, taxi e auto in doppia corsia, vapore dai tombini, luna), Londra (Big Ben con orologio animato, London Eye rotante, Tamigi, 2 bus double-decker + 3 black cab, pioggerella, persone con ombrello, cane che passeggia), Dubai (Burj-style spire, torre elicoidale rotante, vela, fontane luminose, falconi, auto di lusso, tramonto+luna), Mosca (San Basilio con 5 cupole colorate, Cremlino, neve, auto con fari accesi, corvi, luna grande)
 - Vita urbana ovunque: persone (istanziate con colori casuali), piccioni che beccano, uccelli che volano in cerchio con battito d'ali, traffico animato

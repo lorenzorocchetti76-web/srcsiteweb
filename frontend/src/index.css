@@ -27,6 +27,15 @@ a{color:inherit;text-decoration:none}
   transition:background-color .4s ease,color .4s ease,transform .4s ease;
 }
 .cap-cta:hover{background:#fff;color:#000;transform:translateY(-2px)}
+.cap-subs{margin-top:28px;border-top:1px solid rgba(255,255,255,.35)}
+.cap-sub{
+  display:flex;align-items:center;gap:18px;padding:12px 0;
+  border-bottom:1px solid rgba(255,255,255,.25);
+  font-size:13px;letter-spacing:.06em;
+}
+.cap-sub i{font-style:normal;font-size:10px;letter-spacing:.24em;opacity:.6;font-variant-numeric:tabular-nums}
+.cap-sub b{font-weight:600}
+.cap-foot{margin-top:34px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;opacity:.55}
 
 .ov-header{
   position:fixed;top:0;left:0;right:0;z-index:20;

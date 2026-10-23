@@ -5,16 +5,22 @@ import { ENVS, SEG } from "./environments";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function setupRig(camera, scene, count) {
+export function setupRig(camera, scene) {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const wps = [];
-  const colors = ENVS.map((e) => new THREE.Color(e.bg));
-  for (let i = 0; i < count; i++) {
+  const envN = ENVS.length;
+  const wps = [{ pos: new THREE.Vector3(-7, 3.2, 34), look: new THREE.Vector3(0, 1.5, 0) }];
+  for (let i = 0; i < envN; i++) {
     wps.push({
       pos: new THREE.Vector3(i % 2 ? 7 : -7, ENVS[i].camY || 2.6, -i * SEG + 24),
       look: new THREE.Vector3(0, ENVS[i].lookY || 1.2, -i * SEG),
     });
   }
+  wps.push({
+    pos: new THREE.Vector3(4, 2.2, -(envN - 1) * SEG + 15),
+    look: new THREE.Vector3(0, 2.4, -(envN - 1) * SEG),
+  });
+  const colors = [ENVS[0].bg, ...ENVS.map((e) => e.bg), ENVS[envN - 1].bg].map((b) => new THREE.Color(b));
+  const count = wps.length;
   const state = { p: 0 };
   const tmpL = new THREE.Vector3();
   const tmpC = new THREE.Color();
@@ -26,8 +32,13 @@ export function setupRig(camera, scene, count) {
   });
   return {
     active: 0,
+    f: 0,
+    envF: 0,
     apply() {
       const f = state.p * (count - 1);
+      this.f = f;
+      this.envF = THREE.MathUtils.clamp(f - 1, 0, envN - 1);
+      this.active = Math.round(this.envF);
       const i = Math.min(count - 2, Math.max(0, Math.floor(f)));
       let t = f - i;
       t = t * t * (3 - 2 * t);
@@ -37,7 +48,6 @@ export function setupRig(camera, scene, count) {
       tmpC.copy(colors[i]).lerp(colors[i + 1], t);
       scene.background.copy(tmpC);
       scene.fog.color.copy(tmpC);
-      this.active = Math.round(f);
     },
     destroy() {
       if (tween.scrollTrigger) tween.scrollTrigger.kill();
