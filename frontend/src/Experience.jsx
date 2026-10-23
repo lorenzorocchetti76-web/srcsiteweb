@@ -13,29 +13,29 @@ gsap.registerPlugin(ScrollTrigger);
 
 const CAPTIONS = [
   {
-    id: "foresta", idx: "01", name: "Foresta",
-    lines: ["Nel buio,", "ogni suono", "è direzione."],
-    text: "L'esplorazione inizia tra i tronchi: le lucciole blu guidano lo sguardo. Tocca la pietra sospesa, osserva la luna.",
+    id: "roma", idx: "01", name: "Roma",
+    lines: ["L'eternità", "in laterizio", "e oro."],
+    text: "Cupole, colonnati e cipressi sotto un sole che non tramonta mai davvero. Tocca la cupola e lascia che la polvere dorata ti guidi.",
   },
   {
-    id: "oceano", idx: "02", name: "Oceano",
-    lines: ["Lasciati", "attraversare", "dalla corrente."],
-    text: "Una superficie d'acqua che respira sotto di te. Le gocce fluttuano: sfiorale e guardale reagire.",
+    id: "newyork", idx: "02", name: "New York",
+    lines: ["Nove milioni", "di sogni", "accesi."],
+    text: "Migliaia di finestre illuminate, taxi gialli che attraversano la notte, un grattacielo che svetta. Ogni luce è una storia.",
   },
   {
-    id: "ghiacciaio", idx: "03", name: "Ghiacciaio",
-    lines: ["La luce", "scolpisce", "il silenzio."],
-    text: "Rocce nere su un orizzonte bianco, cristalli di ghiaccio in deriva lenta. Il contrasto è il paesaggio.",
+    id: "londra", idx: "03", name: "Londra",
+    lines: ["Nebbia, pioggia", "e grigio", "perfetto."],
+    text: "Il Big Ben scandisce il tempo, l'Occhio gira lento sul Tamigi e un double-decker rosso taglia la foschia.",
   },
   {
-    id: "tempesta", idx: "04", name: "Tempesta",
-    lines: ["La pioggia", "tiene", "il ritmo."],
-    text: "Seicento gocce cadono insieme e nessuna si ripete. I lampi arrivano quando meno te lo aspetti.",
+    id: "dubai", idx: "04", name: "Dubai",
+    lines: ["Il deserto", "che tocca", "il cielo."],
+    text: "Guglie d'oro e vetro, una torre che ruota su se stessa, fontane di luce nella notte viola del deserto.",
   },
   {
-    id: "cielo", idx: "05", name: "Cielo",
-    lines: ["Ogni idea", "trova la sua", "orbita."],
-    text: "Il viaggio finisce dove comincia lo spazio. Cinque satelliti, una luna, infinite stelle: la prossima orbita può essere la tua.",
+    id: "mosca", idx: "05", name: "Mosca",
+    lines: ["Cupole colorate", "nella", "neve."],
+    text: "Il rosso del Cremlino, le cupole di San Basilio, la neve che cade senza rumore. Il viaggio finisce qui: la prossima città la costruiamo insieme.",
     cta: true,
   },
 ];

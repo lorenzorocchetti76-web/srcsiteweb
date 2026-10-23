@@ -22,6 +22,13 @@ Landing page completa e responsive in un UNICO file HTML, zero dipendenze estern
 - Single-file HTML, palette rigorosa, 5 fasi con transizione cromatica graduale scroll-synced
 - Contenuti in italiano, tono editoriale/contemporaneo, tipografia non compressa
 
+## Implementato (23/10/2026) — Città + vita urbana
+- Sostituiti i 5 ambienti natura con 5 città procedurali: Roma (cupola, colonnato, rovine, cipressi, vespe, sole+luna, polvere dorata), New York (170 grattacieli con ~1400 finestre illuminate, Empire-style tower con beacon, taxi e auto in doppia corsia, vapore dai tombini, luna), Londra (Big Ben con orologio animato, London Eye rotante, Tamigi, 2 bus double-decker + 3 black cab, pioggerella, persone con ombrello, cane che passeggia), Dubai (Burj-style spire, torre elicoidale rotante, vela, fontane luminose, falconi, auto di lusso, tramonto+luna), Mosca (San Basilio con 5 cupole colorate, Cremlino, neve, auto con fari accesi, corvi, luna grande)
+- Vita urbana ovunque: persone (istanziate con colori casuali), piccioni che beccano, uccelli che volano in cerchio con battito d'ali, traffico animato
+- Fix pavimento: lastre solide spesse 0.9 che si affiancano senza sovrapposizioni (eliminato z-fighting e colori sbagliati in transizione); corridoio libero sul percorso camera; nebbia regolata per non far "sbucare" la città vicina
+- Sole e luna presenti in ogni città con aloni luminosi
+- Verificato via screenshot: Roma, New York, Londra, Dubai, Mosca + transizione intermedia; zero errori console
+
 ## Implementato (22/10/2026) — Upgrade cromatico ambienti
 - Palette multicolore in tutti gli ambienti: foresta con lucciole ciano/viola/ambra e funghi luminosi pulsanti (corallo, teal, viola), tracce viola sui tronchi; oceano con onde a gradiente turchese→blu→viola (vertex colors), plancton bioluminescente, gocce colorate, anelli di marea attorno alla perla; ghiacciaio con aurora boreale animata (3 nastri verde/ciano/viola/rosa) e cristalli colorati; tempesta indaco con doppio strato di pioggia e arcobaleno che appare dopo ogni lampo; cielo con stelle multicolore, via lattea, 3 nebulose additive (viola/teal/magenta), luna con alone dorato, satelliti colorati collegati da linee di costellazione aggiornate in tempo reale
 - Texture generate proceduralmente via canvas (bagliori, aurora) — zero asset esterni

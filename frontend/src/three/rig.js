@@ -11,8 +11,8 @@ export function setupRig(camera, scene, count) {
   const colors = ENVS.map((e) => new THREE.Color(e.bg));
   for (let i = 0; i < count; i++) {
     wps.push({
-      pos: new THREE.Vector3(i % 2 ? 7 : -7, 2.6, -i * SEG + 24),
-      look: new THREE.Vector3(0, 1.2, -i * SEG),
+      pos: new THREE.Vector3(i % 2 ? 7 : -7, ENVS[i].camY || 2.6, -i * SEG + 24),
+      look: new THREE.Vector3(0, ENVS[i].lookY || 1.2, -i * SEG),
     });
   }
   const state = { p: 0 };
