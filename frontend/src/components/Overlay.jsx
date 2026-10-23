@@ -31,9 +31,8 @@ export default function Overlay({ loadPct, ready, failed }) {
     <>
       <header className="ov-header">
         <a className="ov-logo" href="/" data-testid="logo">
-          <span>Studio Rocchetti &amp; Partners</span>
+          <span>Studio Rocchetti Comunicazione</span>
         </a>
-        <a className="ov-classic" href="/landing.html" data-testid="link-classic">Versione classica ↗</a>
       </header>
 
       <nav className="ov-dots" aria-label="Le 5 fasi">
