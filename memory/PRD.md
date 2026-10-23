@@ -22,6 +22,15 @@ Landing page completa e responsive in un UNICO file HTML, zero dipendenze estern
 - Single-file HTML, palette rigorosa, 5 fasi con transizione cromatica graduale scroll-synced
 - Contenuti in italiano, tono editoriale/contemporaneo, tipografia non compressa
 
+## Implementato (23/10/2026) — Espansione mappe, vita e leggibilità
+- Mappe cittadine ingrandite (fino a 380 edifici a NYC, aree 140-150 unità, lastre 170, nebbia estesa a 70)
+- Nuovi contenuti per città: parchi alberati (pini Roma, Central Park NYC, Hyde Park Londra, palme Dubai, betulle Mosca), centri sportivi (campo tennis Roma, basket NYC, stadio Londra, arena Dubai, pista ghiaccio Mosca), monumenti extra (Arco trionfale Roma, Dubai Frame, cabine telefoniche rosse Londra, torri a cipolla Mosca, serbatoi sui tetti NYC, unità AC ovunque)
+- Biciclette con ciclista che pedala (corsia dedicata lungo il viale) e moto con pilota nel traffico di ogni città
+- Zero collisioni: zone di esclusione attorno a ogni monumento/parco/campo, bande fluviali, corridoio centrale sempre libero
+- Edifici ad alta definizione: texture facciate 128×192 con cornici finestre
+- Testi: tutti bianchi con ombra per leggibilità su qualsiasi sfondo; rimosso il quadratino dal logo; sezione finale "Diamoci da fare" spostata in pannello separato con sfondo nero
+- Verificato via screenshot: Roma (Colosseo+pini+campo tennis), Dubai (Burj+Frame+bici), Mosca (San Basilio+moto+ghiaccio), finale nero con CTA; mapping caption↔scena corretto. NOTA: in headless lo scrub GSAP converge lentamente (lagSmoothing a bassi fps), su browser reali è istantaneo
+
 ## Implementato (23/10/2026) — Branding, testi ufficiali e upgrade cinematico
 - Header: "Studio Rocchetti & Partners"; titolo pagina e meta aggiornati
 - Percorso: intro ("Dal briefing al risultato.") + 5 fasi ufficiali mappate sulle città (01 Briefing/Ascolto→Roma, 02 Analisi/Strategia→New York, 03 Sviluppo Creativo→Londra, 04 Lancio→Dubai, 05 Monitoraggio→Mosca) con sotto-voci numerate, finale "Diamoci da fare." con CTA mailto INFO@STUDIOROCCHETTI.COM e riga ©

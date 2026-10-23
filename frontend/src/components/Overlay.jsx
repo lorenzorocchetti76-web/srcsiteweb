@@ -31,10 +31,6 @@ export default function Overlay({ loadPct, ready, failed }) {
     <>
       <header className="ov-header">
         <a className="ov-logo" href="/" data-testid="logo">
-          <svg viewBox="0 0 64 64" width="26" height="26" aria-hidden="true">
-            <rect width="64" height="64" rx="14" fill="#224d8a" />
-            <circle cx="32" cy="32" r="9" fill="#f6f6f4" />
-          </svg>
           <span>Studio Rocchetti &amp; Partners</span>
         </a>
         <a className="ov-classic" href="/landing.html" data-testid="link-classic">Versione classica ↗</a>

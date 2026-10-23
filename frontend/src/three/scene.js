@@ -30,7 +30,7 @@ export function createScene(canvas, q) {
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
   scene.environmentIntensity = 0.35;
-  scene.fog = new THREE.Fog(0x050505, 14, 62);
+  scene.fog = new THREE.Fog(0x050505, 14, 70);
   const camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.1, 400);
   camera.position.set(-7, 2.6, 24);
   canvas.addEventListener("webglcontextlost", (e) => {

@@ -56,6 +56,7 @@ const PANELS = [
     text: ["Un processo chiaro. Una comunicazione che resta.", "STRATEGIA / CREATIVITÀ / DIGITALE"],
     cta: true,
     footer: "© STUDIO ROCCHETTI comunicazione",
+    black: true,
   },
 ];
 
@@ -134,7 +135,7 @@ export default function Experience() {
       <canvas ref={canvasRef} id="gl" data-testid="gl-canvas" aria-hidden="true" />
       <div id="track">
         {PANELS.map((c, i) => (
-          <section className={"panel" + (i % 2 ? " right" : "")} key={c.id} data-panel={i}>
+          <section className={"panel" + (i % 2 && !c.black ? " right" : "") + (c.black ? " black" : "")} key={c.id} data-panel={i}>
             <div className="caption" data-testid={"caption-" + c.id}>
               <span className="cap-idx">{c.idx}</span>
               <h2 className="cap-title">

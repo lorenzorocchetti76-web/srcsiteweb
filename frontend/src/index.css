@@ -14,7 +14,10 @@ a{color:inherit;text-decoration:none}
 .panel.right{justify-content:flex-end}
 .panel:last-child{min-height:125vh}
 
-.caption{max-width:600px;color:#fff;mix-blend-mode:difference}
+.caption{
+  max-width:600px;color:#fff;
+  text-shadow:0 1px 3px rgba(0,0,0,.55),0 4px 30px rgba(0,0,0,.4);
+}
 .cap-idx{display:inline-block;font-size:11px;letter-spacing:.34em;text-transform:uppercase;opacity:.65;margin-bottom:22px}
 .cap-title{font-size:clamp(38px,6.4vw,92px);font-weight:750;letter-spacing:-.015em;line-height:1.02}
 .cap-title .line{display:block;overflow:hidden;padding-bottom:.07em;margin-bottom:-.07em}
@@ -41,7 +44,8 @@ a{color:inherit;text-decoration:none}
   position:fixed;top:0;left:0;right:0;z-index:20;
   display:flex;justify-content:space-between;align-items:center;
   padding:20px clamp(20px,5vw,64px);
-  mix-blend-mode:difference;color:#fff;pointer-events:none;
+  color:#fff;pointer-events:none;
+  text-shadow:0 1px 3px rgba(0,0,0,.55),0 2px 16px rgba(0,0,0,.4);
 }
 .ov-logo{display:flex;align-items:center;gap:11px;font-weight:700;font-size:14px;letter-spacing:.02em;pointer-events:auto}
 .ov-classic{font-size:11px;letter-spacing:.22em;text-transform:uppercase;opacity:.75;transition:opacity .3s ease;pointer-events:auto}
@@ -49,11 +53,12 @@ a{color:inherit;text-decoration:none}
 
 .ov-dots{
   position:fixed;left:clamp(14px,3vw,36px);top:50%;transform:translateY(-50%);
-  z-index:20;display:flex;flex-direction:column;gap:16px;mix-blend-mode:difference;
+  z-index:20;display:flex;flex-direction:column;gap:16px;
 }
 .dot{
   width:9px;height:9px;border-radius:50%;border:1px solid #fff;background:transparent;
-  cursor:pointer;padding:0;transition:transform .4s ease,background-color .4s ease;
+  cursor:pointer;padding:0;box-shadow:0 1px 6px rgba(0,0,0,.5);
+  transition:transform .4s ease,background-color .4s ease;
 }
 .dot.on{background:#fff;transform:scale(1.5)}
 .dot:hover{transform:scale(1.35)}
@@ -61,10 +66,15 @@ a{color:inherit;text-decoration:none}
 .ov-hint{
   position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:20;
   font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#fff;
-  mix-blend-mode:difference;opacity:.8;transition:opacity .8s ease;
+  text-shadow:0 1px 3px rgba(0,0,0,.6);
+  opacity:.85;transition:opacity .8s ease;
   white-space:nowrap;pointer-events:none;
 }
 .ov-hint.gone{opacity:0}
+
+.panel.black{background:#050505;pointer-events:auto;justify-content:center;min-height:110vh}
+.panel.black .caption{max-width:660px}
+.panel.black .cap-text{opacity:.65}
 
 .ov-loader{
   position:fixed;inset:0;z-index:50;background:#050505;
