@@ -7,6 +7,7 @@ import { ENVS, SEG, buildEnvironment } from "@/three/environments";
 import { setupRig } from "@/three/rig";
 import { setupInteractions } from "@/three/interactions";
 import { logEvent } from "@/utils/logger";
+import { audioMix } from "@/utils/audio";
 import Overlay from "@/components/Overlay";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -112,6 +113,7 @@ export default function Experience() {
           rig.apply();
           inter.applyLook(camera);
           const ef = rig.envF;
+          audioMix(ef);
           envs.forEach((e, idx) => {
             const vis = Math.abs(idx - ef) < 1.7;
             e.group.visible = vis;
