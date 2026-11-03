@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const PHASES = ["Ascolto", "Strategia", "Sviluppo", "Lancio", "Misurazione"];
+const PHASES = ["Roma", "New York", "Londra", "Dubai", "Mosca"];
 
 export default function Overlay({ loadPct, ready, failed }) {
   const [active, setActive] = useState(0);
@@ -33,9 +33,10 @@ export default function Overlay({ loadPct, ready, failed }) {
         <a className="ov-logo" href="/" data-testid="logo">
           <span>Studio Rocchetti Comunicazione</span>
         </a>
+        <button className="ov-classic" data-testid="link-galleria" onClick={() => goTo(0)} style={{ background: "none", border: "none", cursor: "pointer", color: "inherit", font: "inherit", letterSpacing: "inherit", textTransform: "inherit" }}>Galleria</button>
       </header>
 
-      <nav className="ov-dots" aria-label="Le 5 fasi">
+      <nav className="ov-dots" aria-label="Galleria — le 5 città">
         {PHASES.map((name, i) => (
           <button
             key={name}

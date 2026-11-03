@@ -22,6 +22,13 @@ Landing page completa e responsive in un UNICO file HTML, zero dipendenze estern
 - Single-file HTML, palette rigorosa, 5 fasi con transizione cromatica graduale scroll-synced
 - Contenuti in italiano, tono editoriale/contemporaneo, tipografia non compressa
 
+## Implementato (03/11/2026) — Rebrand "Un viaggio nel mondo"
+- Nuova identità testuale: intro "Un progetto di Studio Rocchetti Comunicazione" + titolo "Un viaggio nel mondo."; ogni città torna ai suoi testi poetici (Roma "L'eternità in laterizio e oro.", NYC "Nove milioni di sogni accesi.", ecc.) con sotto-voci monumento (Colosseo/Cupolone, Statua della Libertà/Central Park, Big Ben/London Eye, Burj Khalifa/Dubai Frame, Piazza Rossa/San Basilio)
+- Header: "Studio Rocchetti Comunicazione" + link "Galleria" (salta alla prima città); pallini laterali rinominati con i nomi delle città
+- Finale nero semplificato: "Il prossimo viaggio?" + CTA "Scrivici — info@studiorocchetti.com" + ©
+- Titolo pagina/meta aggiornati; fix hint gestuale su schermi bassi
+- Verificato via screenshot: intro su Roma con nuovo titolo e header, DOM conferma tutti i nuovi testi
+
 ## Implementato (23/10/2026) — Espansione mappe, vita e leggibilità
 - Mappe cittadine ingrandite (fino a 380 edifici a NYC, aree 140-150 unità, lastre 170, nebbia estesa a 70)
 - Nuovi contenuti per città: parchi alberati (pini Roma, Central Park NYC, Hyde Park Londra, palme Dubai, betulle Mosca), centri sportivi (campo tennis Roma, basket NYC, stadio Londra, arena Dubai, pista ghiaccio Mosca), monumenti extra (Arco trionfale Roma, Dubai Frame, cabine telefoniche rosse Londra, torri a cipolla Mosca, serbatoi sui tetti NYC, unità AC ovunque)

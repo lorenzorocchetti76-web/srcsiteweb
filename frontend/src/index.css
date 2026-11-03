@@ -94,6 +94,10 @@ a{color:inherit;text-decoration:none}
   .ov-hint{font-size:9px;letter-spacing:.18em;bottom:20px}
   .cap-text{max-width:36ch}
 }
+@media(max-height:640px){
+  .ov-hint{display:none}
+  .cap-title{font-size:clamp(32px,5.4vw,72px)}
+}
 
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
